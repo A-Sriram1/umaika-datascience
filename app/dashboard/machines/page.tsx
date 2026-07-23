@@ -8,12 +8,12 @@ import { SENSOR_THRESHOLDS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 const tooltipStyle = {
-  backgroundColor: 'rgba(15, 23, 42, 0.95)',
-  border: '1px solid rgba(56, 189, 248, 0.3)',
+  backgroundColor: 'rgba(13, 19, 36, 0.96)',
+  border: '1px solid rgba(16, 185, 129, 0.35)',
   borderRadius: '14px',
   color: '#f8fafc',
   fontSize: '12px',
-  boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+  boxShadow: '0 10px 30px rgba(0,0,0,0.6)',
 };
 
 const sensorIcons: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
@@ -66,20 +66,20 @@ export default function MachinesPage() {
   }, []);
 
   const summaryCards = [
-    { label: 'Total Fleet Machines', value: statusCounts.total, icon: Server, color: '#38bdf8' },
+    { label: 'Total Fleet Machines', value: statusCounts.total, icon: Server, color: '#10b981' },
     { label: 'Operational Online', value: statusCounts.online, icon: CheckCircle, color: '#34d399' },
-    { label: 'Scheduled Maintenance', value: statusCounts.maintenance, icon: Wrench, color: '#fb923c' },
+    { label: 'Scheduled Maintenance', value: statusCounts.maintenance, icon: Wrench, color: '#f59e0b' },
     { label: 'Critical Failure Risk', value: statusCounts.alerts, icon: AlertTriangle, color: '#f43f5e' },
   ];
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-sky-500/10 via-cyan-500/5 to-purple-500/10 p-6 rounded-3xl border border-sky-500/20 backdrop-blur-xl shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-emerald-500/15 via-amber-500/10 to-purple-500/15 p-6 rounded-3xl border border-emerald-500/30 backdrop-blur-xl shadow-xl">
         <div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">Machine Intelligence & IoT Stream</h1>
-          <p className="text-cyan-200/80 text-sm mt-1 font-medium">Real-time telemetry grounded in UCI AI4I 2020 & NASA CMAPSS Datasets</p>
+          <p className="text-emerald-200/90 text-sm mt-1 font-medium">Real-time telemetry grounded in UCI AI4I 2020 & NASA CMAPSS Datasets</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-bold">
+        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold">
           <Sparkles className="w-3.5 h-3.5" /> 18 Live Sensor Channels
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function MachinesPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {summaryCards.map((s, i) => (
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-            className="rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950/90 backdrop-blur-2xl border border-white/10 p-5 shadow-xl hover:border-cyan-500/30 transition-all" style={{ borderLeft: `4px solid ${s.color}` }}>
+            className="rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950/90 backdrop-blur-2xl border border-white/10 p-5 shadow-xl hover:border-emerald-500/40 transition-all" style={{ borderLeft: `4px solid ${s.color}` }}>
             <div className="flex items-center gap-3.5">
               <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-lg" style={{ backgroundColor: `${s.color}20`, border: `1px solid ${s.color}40` }}>
                 <s.icon className="w-5.5 h-5.5" style={{ color: s.color }} />
@@ -104,19 +104,19 @@ export default function MachinesPage() {
         {/* Machine List */}
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
           className="rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950/90 backdrop-blur-2xl border border-white/10 p-4 max-h-[650px] overflow-y-auto shadow-2xl">
-          <h2 className="text-xs font-bold text-cyan-300 uppercase tracking-widest mb-3 px-2">Fleet Inspector</h2>
+          <h2 className="text-xs font-bold text-emerald-300 uppercase tracking-widest mb-3 px-2">Fleet Inspector</h2>
           <div className="space-y-1.5">
             {machines.map(m => (
               <button key={m.id} onClick={() => setSelectedId(m.id)}
                 className={cn('w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl text-left transition-all border',
-                  selectedId === m.id ? 'bg-cyan-500/15 border-cyan-400/40 text-white shadow-md shadow-cyan-500/10' : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.06] text-slate-300')}>
-                <span className={cn('w-2.5 h-2.5 rounded-full flex-shrink-0 shadow-sm', m.status === 'running' ? 'bg-emerald-400 shadow-emerald-400' : m.status === 'idle' ? 'bg-amber-400 shadow-amber-400' : m.status === 'maintenance' ? 'bg-sky-400 shadow-sky-400' : 'bg-rose-500 shadow-rose-500')} />
+                  selectedId === m.id ? 'bg-emerald-500/20 border-emerald-400/50 text-white shadow-md shadow-emerald-500/10' : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.06] text-slate-300')}>
+                <span className={cn('w-2.5 h-2.5 rounded-full flex-shrink-0 shadow-sm', m.status === 'running' ? 'bg-emerald-400 shadow-emerald-400' : m.status === 'idle' ? 'bg-amber-400 shadow-amber-400' : m.status === 'maintenance' ? 'bg-purple-400 shadow-purple-400' : 'bg-rose-500 shadow-rose-500')} />
                 <div className="flex-1 min-w-0">
                   <div className="text-xs font-bold text-white truncate">{m.name}</div>
                   <div className="text-[11px] text-slate-400">{m.type}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs font-bold font-mono text-cyan-300">{m.healthScore}%</div>
+                  <div className="text-xs font-bold font-mono text-emerald-300">{m.healthScore}%</div>
                   <div className="w-12 h-1.5 rounded-full bg-white/10 mt-1 overflow-hidden">
                     <div className="h-full rounded-full" style={{ width: `${m.healthScore}%`, backgroundColor: m.healthScore > 75 ? '#34d399' : m.healthScore > 50 ? '#fb923c' : '#f43f5e' }} />
                   </div>
@@ -129,19 +129,19 @@ export default function MachinesPage() {
         {/* Detail Panel */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="lg:col-span-3 space-y-6">
           {/* Machine Header */}
-          <div className="rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950/90 backdrop-blur-2xl border border-cyan-500/20 p-6 shadow-2xl">
+          <div className="rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950/90 backdrop-blur-2xl border border-emerald-500/25 p-6 shadow-2xl">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
                 <h2 className="text-2xl font-black text-white tracking-tight">{selected.name}</h2>
-                <p className="text-cyan-200/80 text-xs font-semibold mt-0.5">{selected.type} · Operational Line: {selected.line}</p>
+                <p className="text-emerald-200/80 text-xs font-semibold mt-0.5">{selected.type} · Operational Line: {selected.line}</p>
               </div>
               <div className="flex items-center gap-3">
                 <span className={cn('px-3.5 py-1 rounded-full text-xs font-extrabold border',
-                  selected.status === 'running' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : selected.status === 'idle' ? 'bg-amber-500/15 text-amber-300 border-amber-500/30' : selected.status === 'maintenance' ? 'bg-sky-500/15 text-sky-300 border-sky-500/30' : 'bg-rose-500/15 text-rose-300 border-rose-500/30')}>
+                  selected.status === 'running' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : selected.status === 'idle' ? 'bg-amber-500/15 text-amber-300 border-amber-500/30' : selected.status === 'maintenance' ? 'bg-purple-500/15 text-purple-300 border-purple-500/30' : 'bg-rose-500/15 text-rose-300 border-rose-500/30')}>
                   {selected.status.toUpperCase()}
                 </span>
-                <div className="text-center px-4 py-1.5 rounded-2xl bg-sky-500/10 border border-sky-500/30 shadow-inner">
-                  <div className="text-xl font-extrabold text-cyan-300 font-mono">{selected.rulCycles}</div>
+                <div className="text-center px-4 py-1.5 rounded-2xl bg-amber-500/15 border border-amber-500/30 shadow-inner">
+                  <div className="text-xl font-extrabold text-amber-300 font-mono">{selected.rulCycles}</div>
                   <div className="text-[10px] font-bold text-slate-300 uppercase">RUL Cycles (NASA CMAPSS)</div>
                 </div>
                 <div className="text-center px-4 py-1.5 rounded-2xl bg-white/[0.04] border border-white/10">
@@ -160,15 +160,15 @@ export default function MachinesPage() {
                 return (
                   <div key={key} onClick={() => setSelectedSensor(key)}
                     className={cn('rounded-2xl p-4 border transition-all cursor-pointer',
-                      selectedSensor === key ? 'bg-gradient-to-br from-sky-500/20 to-cyan-500/10 border-cyan-400/50 shadow-lg shadow-cyan-500/10' : 'bg-white/[0.03] border-white/5 hover:bg-white/[0.06]')}>
+                      selectedSensor === key ? 'bg-gradient-to-br from-emerald-500/25 to-amber-500/15 border-emerald-400/50 shadow-lg shadow-emerald-500/10' : 'bg-white/[0.03] border-white/5 hover:bg-white/[0.06]')}>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <Icon className="w-4 h-4 text-cyan-400" />
+                        <Icon className="w-4 h-4 text-emerald-400" />
                         <span className="text-xs font-semibold text-slate-300">{sensorLabels[key] || key}</span>
                       </div>
                       <span className={cn('w-2 h-2 rounded-full shadow-sm', status === 'normal' ? 'bg-emerald-400 shadow-emerald-400' : status === 'warning' ? 'bg-amber-400 shadow-amber-400' : 'bg-rose-500 shadow-rose-500')} />
                     </div>
-                    <div className="text-2xl font-extrabold text-white font-mono">{value}<span className="text-xs text-cyan-300 font-medium ml-1.5">{threshold?.unit}</span></div>
+                    <div className="text-2xl font-extrabold text-white font-mono">{value}<span className="text-xs text-amber-300 font-medium ml-1.5">{threshold?.unit}</span></div>
                     <div className="h-1.5 rounded-full bg-white/10 mt-2 overflow-hidden">
                       <div className="h-full rounded-full transition-all" style={{
                         width: `${Math.min(((value as number) / (threshold?.critical || 100)) * 100, 100)}%`,
@@ -182,22 +182,22 @@ export default function MachinesPage() {
           </div>
 
           {/* Sensor Trend */}
-          <div className="rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950/90 backdrop-blur-2xl border border-sky-500/20 p-6 shadow-2xl">
+          <div className="rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-slate-950/90 backdrop-blur-2xl border border-emerald-500/25 p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-white tracking-tight">Sensor Telemetry Trend — {sensorLabels[selectedSensor]}</h2>
               <select value={selectedSensor} onChange={e => setSelectedSensor(e.target.value)}
-                className="px-4 py-2 rounded-xl bg-slate-900 border border-white/10 text-xs font-semibold text-cyan-300 appearance-none cursor-pointer">
+                className="px-4 py-2 rounded-xl bg-slate-900 border border-white/10 text-xs font-semibold text-emerald-300 appearance-none cursor-pointer">
                 {Object.keys(sensorLabels).map(k => <option key={k} value={k} className="bg-slate-900">{sensorLabels[k]}</option>)}
               </select>
             </div>
             <ResponsiveContainer width="100%" height={260}>
               <AreaChart data={sensorTrend}>
-                <defs><linearGradient id="sensorGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#38bdf8" stopOpacity={0.4} /><stop offset="95%" stopColor="#38bdf8" stopOpacity={0} /></linearGradient></defs>
+                <defs><linearGradient id="sensorGradEmerald" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#10b981" stopOpacity={0.4} /><stop offset="95%" stopColor="#10b981" stopOpacity={0} /></linearGradient></defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                 <XAxis dataKey="timestamp" tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Area type="monotone" dataKey="value" stroke="#38bdf8" strokeWidth={3} fill="url(#sensorGrad)" />
+                <Area type="monotone" dataKey="value" stroke="#10b981" strokeWidth={3} fill="url(#sensorGradEmerald)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

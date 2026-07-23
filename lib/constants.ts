@@ -102,7 +102,7 @@ export const ALERT_TYPE_LABELS: Record<string, string> = {
 };
 
 export const CHART_COLORS = [
-  '#0ea5e9', '#06b6d4', '#22c55e', '#f97316',
-  '#8b5cf6', '#ec4899', '#eab308', '#ef4444',
-  '#14b8a6', '#6366f1', '#f43f5e', '#84cc16',
+  '#10b981', '#f59e0b', '#a855f7', '#84cc16',
+  '#f43f5e', '#fb923c', '#eab308', '#ec4899',
+  '#14b8a6', '#d97706', '#9333ea', '#65a30d',
 ];
