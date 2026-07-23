@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Factory, Brain, Cog, BarChart3, Bell, Bot, Sparkles, Workflow, Network, FileText, Zap, Shield, ChevronRight, ArrowRight, Menu, X, Play, Star, CheckCircle } from 'lucide-react';
+import { Factory, Brain, Cog, BarChart3, Bell, Bot, Sparkles, Workflow, Network, FileText, Zap, Shield, ChevronRight, ArrowRight, Menu, X, Play, Star, CheckCircle, UserPlus } from 'lucide-react';
 
 const features = [
   { icon: Factory, title: 'Production Monitoring', desc: 'Live production counts, cycle times, OEE, and line performance in real time.', color: 'emerald' },
@@ -70,8 +70,9 @@ export default function LandingPage() {
             <a href="#testimonials" className="hover:text-emerald-700 transition-colors">Testimonials</a>
           </div>
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/login" className="text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors px-4 py-2">Sign In</Link>
-            <Link href="/login" className="px-6 py-2.5 text-sm font-extrabold rounded-xl bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 text-white shadow-md shadow-emerald-600/20 hover:scale-105 transition-all">Launch Platform</Link>
+            <Link href="/login" className="text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors px-3 py-2">Sign In</Link>
+            <Link href="/signup" className="px-5 py-2 text-sm font-bold rounded-xl bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200 transition-all">Sign Up</Link>
+            <Link href="/dashboard" className="px-6 py-2.5 text-sm font-extrabold rounded-xl bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 text-white shadow-md shadow-emerald-600/20 hover:scale-105 transition-all">Launch Console</Link>
           </div>
           <button onClick={() => setMobileMenu(!mobileMenu)} className="md:hidden text-slate-900"><Menu className="w-6 h-6" /></button>
         </div>
@@ -80,7 +81,8 @@ export default function LandingPage() {
             <a href="#features" className="block text-slate-700 font-semibold">Features</a>
             <a href="#how-it-works" className="block text-slate-700 font-semibold">How It Works</a>
             <Link href="/login" className="block text-slate-700 font-semibold">Sign In</Link>
-            <Link href="/login" className="block px-4 py-2.5 text-center rounded-xl bg-gradient-to-r from-emerald-600 to-amber-500 text-white font-extrabold">Launch Platform</Link>
+            <Link href="/signup" className="block text-slate-700 font-semibold">Sign Up</Link>
+            <Link href="/dashboard" className="block px-4 py-2.5 text-center rounded-xl bg-gradient-to-r from-emerald-600 to-amber-500 text-white font-extrabold">Launch Console</Link>
           </motion.div>
         )}
       </nav>
@@ -99,12 +101,15 @@ export default function LandingPage() {
             <p className="mt-8 text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
               Autonomous manufacturing process optimization platform competing with Siemens MindSphere, GE Predix, and PTC ThingWorx. Powered by real-time IoT sensors and Deep Learning.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-5 justify-center">
-              <Link href="/login" className="px-9 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 text-white font-extrabold text-base hover:shadow-xl hover:shadow-emerald-600/30 hover:scale-105 transition-all flex items-center justify-center gap-2">
-                Start Free Trial <ArrowRight className="w-5 h-5" />
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/signup" className="px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 text-white font-extrabold text-base hover:shadow-xl hover:shadow-emerald-600/30 hover:scale-105 transition-all flex items-center justify-center gap-2">
+                <UserPlus className="w-5 h-5" /> Create Free Account
               </Link>
-              <Link href="/dashboard" className="px-9 py-4 rounded-2xl border border-slate-300 bg-slate-50 text-slate-800 font-bold hover:bg-slate-100 transition-all flex items-center justify-center gap-2">
-                <Play className="w-5 h-5 text-emerald-600" /> Explore Live Dashboard
+              <Link href="/login" className="px-8 py-4 rounded-2xl border border-slate-300 bg-slate-50 text-slate-800 font-bold hover:bg-slate-100 transition-all flex items-center justify-center gap-2">
+                Sign In
+              </Link>
+              <Link href="/dashboard" className="px-8 py-4 rounded-2xl border border-emerald-300 bg-emerald-50 text-emerald-800 font-extrabold hover:bg-emerald-100 transition-all flex items-center justify-center gap-2">
+                <Play className="w-5 h-5 text-emerald-600" /> Live Demo
               </Link>
             </div>
           </motion.div>
@@ -175,8 +180,8 @@ export default function LandingPage() {
           <div className="rounded-3xl bg-gradient-to-br from-emerald-600 via-amber-500 to-purple-600 p-12 md:p-16 text-center shadow-xl text-white">
             <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tight">Ready to Run Your Factory<br />on Autonomous AI?</h2>
             <p className="text-emerald-50 text-lg mb-8 max-w-2xl mx-auto font-medium">Deploy FactoryMind AI across your manufacturing lines in under 24 hours.</p>
-            <Link href="/login" className="inline-flex items-center gap-2 px-9 py-4 rounded-2xl bg-white text-slate-900 font-extrabold text-lg hover:shadow-2xl hover:scale-105 transition-all">
-              Get Started Free <ArrowRight className="w-5 h-5 text-emerald-600" />
+            <Link href="/signup" className="inline-flex items-center gap-2 px-9 py-4 rounded-2xl bg-white text-slate-900 font-extrabold text-lg hover:shadow-2xl hover:scale-105 transition-all">
+              Create Enterprise Account <ArrowRight className="w-5 h-5 text-emerald-600" />
             </Link>
           </div>
         </div>

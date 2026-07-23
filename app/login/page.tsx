@@ -1,8 +1,9 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Factory, Mail, Lock, ChevronDown, LogIn, Zap, Sparkles } from 'lucide-react';
+import { Factory, Mail, Lock, ChevronDown, LogIn, UserPlus, Sparkles } from 'lucide-react';
 
 const roles = ['Factory Admin', 'Production Manager', 'Plant Supervisor', 'Machine Operator', 'Maintenance Engineer', 'Quality Inspector', 'AI Engineer', 'CEO'];
 
@@ -16,10 +17,10 @@ export default function LoginPage() {
   const handleDemo = () => router.push('/dashboard');
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center relative overflow-hidden selection:bg-emerald-500 selection:text-white font-sans">
+    <div className="min-h-screen bg-white text-slate-900 flex items-center justify-center relative overflow-hidden selection:bg-emerald-500 selection:text-white font-sans py-12 px-4">
       <motion.div initial={{ opacity: 0, y: 30, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md mx-4">
-        <div className="rounded-3xl bg-white border border-slate-200 p-8 shadow-xl">
+        <div className="rounded-3xl bg-white border border-slate-200 p-8 shadow-2xl shadow-slate-200/60">
           {/* Logo */}
           <div className="flex items-center justify-center gap-3 mb-2">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 via-amber-500 to-purple-600 p-0.5 shadow-md flex items-center justify-center">
@@ -61,6 +62,14 @@ export default function LoginPage() {
               <LogIn className="w-4.5 h-4.5" /> Sign In to Factory Console
             </button>
           </form>
+
+          {/* Create Account Link */}
+          <div className="mt-4 text-center">
+            <Link href="/signup"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors">
+              <UserPlus className="w-3.5 h-3.5" /> Don&apos;t have an account? Create an Enterprise Account
+            </Link>
+          </div>
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-6">
