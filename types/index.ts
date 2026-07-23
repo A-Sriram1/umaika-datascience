@@ -23,15 +23,21 @@ export interface User {
 export type MachineStatus = 'running' | 'idle' | 'maintenance' | 'error' | 'offline';
 
 export interface SensorReading {
-  temperature: number;
+  temperature: number; // Process Temperature
+  airTemperature: number; // Air Temperature (AI4I 2020)
+  processTemperature: number; // Process Temperature (AI4I 2020)
   pressure: number;
   voltage: number;
   current: number;
-  rpm: number;
+  power: number; // Power in kW
+  rpm: number; // Rotational Speed (AI4I 2020)
+  torque: number; // Torque in Nm (AI4I 2020)
   vibration: number;
   humidity: number;
   oilLevel: number;
+  toolWear: number; // Tool Wear in min (AI4I 2020)
   energyConsumption: number;
+  failureProbability: number; // Failure Probability (%)
 }
 
 export interface Machine {
@@ -42,6 +48,8 @@ export interface Machine {
   status: MachineStatus;
   healthScore: number;
   sensors: SensorReading;
+  rulCycles: number; // Remaining Useful Life in cycles (NASA CMAPSS)
+  defectCount: number;
   lastMaintenance: string;
   nextMaintenance: string;
   uptime: number;
