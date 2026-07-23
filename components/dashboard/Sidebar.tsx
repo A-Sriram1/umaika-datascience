@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { NAVIGATION } from '@/lib/constants';
 import { LayoutDashboard, Factory, Cog, Brain, Network, FileText, Bot, Sparkles, Workflow, BarChart3, Bell, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useUser } from '@/lib/user-context';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   LayoutDashboard, Factory, Cog, Brain, Network, FileText, Bot, Sparkles, Workflow, BarChart3, Bell, Settings,
@@ -13,6 +14,7 @@ interface SidebarProps { collapsed: boolean; onToggle: () => void; }
 
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const pathname = usePathname();
+  const { user } = useUser();
 
   const isActive = (href: string) => {
     if (href === '/dashboard') return pathname === '/dashboard';
@@ -68,15 +70,17 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* User */}
       <div className="border-t border-slate-200 p-4 bg-slate-50/80">
         {!collapsed && (
-          <div className="flex items-center gap-3 mb-3 px-1">
+          <Link href="/dashboard/settings" className="flex items-center gap-3 mb-3 px-1 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-amber-500 to-purple-600 p-0.5 shadow-sm">
-              <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center text-emerald-700 font-bold text-sm">AU</div>
+              <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center text-emerald-700 font-bold text-sm">
+                {user.initials}
+              </div>
             </div>
             <div className="overflow-hidden">
-              <div className="text-sm font-bold text-slate-900 truncate">Admin User</div>
-              <div className="text-xs text-slate-500 font-medium truncate">Factory Admin</div>
+              <div className="text-sm font-bold text-slate-900 truncate">{user.fullName}</div>
+              <div className="text-xs text-slate-500 font-medium truncate">{user.role}</div>
             </div>
-          </div>
+          </Link>
         )}
         <button onClick={onToggle}
           className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 transition-all border border-slate-200">

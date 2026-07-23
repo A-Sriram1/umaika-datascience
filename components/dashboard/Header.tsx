@@ -1,11 +1,14 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Menu, Search, Bell, Clock, Sparkles } from 'lucide-react';
+import { useUser } from '@/lib/user-context';
 
 interface HeaderProps { collapsed: boolean; onToggle: () => void; }
 
 export default function Header({ collapsed, onToggle }: HeaderProps) {
   const [time, setTime] = useState('');
+  const { user } = useUser();
 
   useEffect(() => {
     const update = () => setTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
@@ -43,9 +46,12 @@ export default function Header({ collapsed, onToggle }: HeaderProps) {
           <Bell className="w-5 h-5" />
           <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-rose-600 text-[10px] text-white flex items-center justify-center font-bold shadow-md shadow-rose-200 border border-white">5</span>
         </button>
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 via-amber-500 to-purple-600 p-0.5 shadow-sm cursor-pointer hover:scale-105 transition-transform">
-          <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center text-emerald-700 font-bold text-sm">AU</div>
-        </div>
+        <Link href="/dashboard/settings" title={`${user.fullName} (${user.role})`}
+          className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 via-amber-500 to-purple-600 p-0.5 shadow-sm hover:scale-105 transition-transform flex items-center justify-center">
+          <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center text-emerald-700 font-bold text-xs">
+            {user.initials}
+          </div>
+        </Link>
       </div>
     </header>
   );

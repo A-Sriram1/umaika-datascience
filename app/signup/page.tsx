@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Factory, Mail, Lock, User, Building, ChevronDown, UserPlus, Sparkles, CheckCircle } from 'lucide-react';
+import { useUser } from '@/lib/user-context';
 
 const roles = [
   'Factory Admin',
@@ -18,6 +19,8 @@ const roles = [
 
 export default function SignUpPage() {
   const router = useRouter();
+  const { signUp } = useUser();
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +31,12 @@ export default function SignUpPage() {
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
+    signUp({
+      fullName,
+      email,
+      role,
+      factoryName,
+    });
     setSuccess(true);
     setTimeout(() => {
       router.push('/dashboard');
@@ -57,7 +66,7 @@ export default function SignUpPage() {
                 <CheckCircle className="w-9 h-9" />
               </div>
               <h2 className="text-2xl font-black text-slate-900">Account Created Successfully!</h2>
-              <p className="text-sm text-slate-600 font-medium">Initializing FactoryMind Autonomous Console...</p>
+              <p className="text-sm text-slate-600 font-medium">Initializing FactoryMind Autonomous Console for {fullName}...</p>
             </motion.div>
           ) : (
             <form onSubmit={handleSignUp} className="space-y-4">
