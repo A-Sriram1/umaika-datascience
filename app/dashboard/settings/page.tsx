@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, User, Bell, Shield, Database, Palette, Key, Save, CheckCircle, Factory, Mail, Phone, Building } from 'lucide-react';
+import { Settings, User, Bell, Shield, Database, Palette, Key, Save, CheckCircle, Factory, Mail, Phone, Building, RefreshCw, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/lib/user-context';
 
@@ -18,43 +18,64 @@ export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('profile');
   const [saved, setSaved] = useState(false);
 
-  // Profile Form state initialized from UserContext
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [email, setEmail] = useState(user.email);
-  const [phone, setPhone] = useState(user.phone || '+1 (555) 0123');
-  const [role, setRole] = useState(user.role);
-  const [factoryName, setFactoryName] = useState(user.factoryName);
+  // Form state
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [role, setRole] = useState('');
+  const [factoryName, setFactoryName] = useState('');
 
+  // Keep form inputs synced with user context whenever user context changes
   useEffect(() => {
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setEmail(user.email);
-    setPhone(user.phone || '+1 (555) 0123');
-    setRole(user.role);
-    setFactoryName(user.factoryName);
+    if (user) {
+      setFirstName(user.firstName || '');
+      setLastName(user.lastName || '');
+      setEmail(user.email || '');
+      setPhone(user.phone || '+1 (555) 0123');
+      setRole(user.role || 'Factory Admin');
+      setFactoryName(user.factoryName || 'Main Manufacturing Plant — Building A');
+    }
   }, [user]);
 
   const handleSave = () => {
     const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
     updateUser({
       fullName,
-      firstName,
-      lastName,
-      email,
-      phone,
-      role,
-      factoryName,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      role: role.trim(),
+      factoryName: factoryName.trim(),
     });
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
 
+  const handleReset = () => {
+    if (user) {
+      setFirstName(user.firstName || '');
+      setLastName(user.lastName || '');
+      setEmail(user.email || '');
+      setPhone(user.phone || '+1 (555) 0123');
+      setRole(user.role || 'Factory Admin');
+      setFactoryName(user.factoryName || 'Main Manufacturing Plant — Building A');
+    }
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Account & Factory Settings</h1>
-        <p className="text-slate-500 text-sm mt-1 font-medium">Manage your enterprise user profile, role permissions, and system preferences</p>
+    <div className="space-y-6 font-sans">
+      <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Account & Factory Settings</h1>
+          <p className="text-slate-500 text-sm mt-1 font-medium">Manage your registered enterprise profile, role permissions, and system preferences</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+            Active Account: {user.email}
+          </span>
+        </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
@@ -65,7 +86,7 @@ export default function SettingsPage() {
               className={cn('w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all text-left',
                 activeTab === t.id
                   ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-transparent'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-transparent'
               )}>
               <t.icon className={cn('w-4 h-4', activeTab === t.id ? 'text-emerald-600' : 'text-slate-500')} />
               <span>{t.label}</span>
@@ -80,20 +101,25 @@ export default function SettingsPage() {
             
             {activeTab === 'profile' && (
               <div className="space-y-6">
-                <h2 className="text-xl font-black text-slate-900 tracking-tight">User Profile Information</h2>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-black text-slate-900 tracking-tight">User Profile Information</h2>
+                  <button onClick={handleReset} className="text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1">
+                    <RefreshCw className="w-3.5 h-3.5" /> Reset to Saved Profile
+                  </button>
+                </div>
                 
                 {/* Avatar Banner */}
-                <div className="flex items-center gap-6 p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 via-amber-500 to-purple-600 p-0.5 shadow-md flex items-center justify-center">
+                <div className="flex items-center gap-6 p-5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 via-amber-500 to-purple-600 p-0.5 shadow-md flex items-center justify-center flex-shrink-0">
                     <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center text-2xl font-black text-emerald-700">
-                      {user.initials}
+                      {user.initials || 'AU'}
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900">{user.fullName}</h3>
-                    <p className="text-xs font-semibold text-emerald-700">{user.role} · {user.factoryName}</p>
-                    <button className="mt-2 text-xs font-bold px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition-colors shadow-xs">
-                      Change Profile Picture
+                    <h3 className="text-lg font-extrabold text-slate-900">{user.fullName || 'Admin User'}</h3>
+                    <p className="text-xs font-bold text-emerald-700 mt-0.5">{user.role} · {user.factoryName}</p>
+                    <button className="mt-2 text-xs font-bold px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition-colors shadow-2xs">
+                      Change Profile Avatar
                     </button>
                   </div>
                 </div>
@@ -103,22 +129,22 @@ export default function SettingsPage() {
                   <div>
                     <label className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 block">First Name</label>
                     <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500" />
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500 focus:bg-white transition-all" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 block">Last Name</label>
                     <input type="text" value={lastName} onChange={e => setLastName(e.target.value)}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500" />
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500 focus:bg-white transition-all" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 block">Work Email</label>
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500" />
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500 focus:bg-white transition-all" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 block">Phone Number</label>
                     <input type="tel" value={phone} onChange={e => setPhone(e.target.value)}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500" />
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500 focus:bg-white transition-all" />
                   </div>
                 </div>
 
@@ -126,12 +152,12 @@ export default function SettingsPage() {
                   <div>
                     <label className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 block">Factory Role</label>
                     <input type="text" value={role} onChange={e => setRole(e.target.value)}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500" />
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500 focus:bg-white transition-all" />
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 block">Factory Plant / Facility Name</label>
                     <input type="text" value={factoryName} onChange={e => setFactoryName(e.target.value)}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500" />
+                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm text-slate-900 font-semibold focus:outline-none focus:border-emerald-500 focus:bg-white transition-all" />
                   </div>
                 </div>
               </div>
